@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seleção para Estágio em RH</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f4f0;
+      color: #1a1a18;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem 2rem 3rem;
+      border: 0.5px solid rgba(0,0,0,0.1);
+    }
+
+    .header { margin-bottom: 2rem; }
+    .header h1 { font-size: 22px; font-weight: 500; color: #1a1a18; margin-bottom: 6px; }
+    .header p { font-size: 14px; color: #6b6b67; line-height: 1.6; }
+
+    .progress-txt { font-size: 12px; color: #9b9b96; margin-bottom: 8px; text-align: right; }
+    .progress-bar { height: 3px; background: #e8e7e3; border-radius: 2px; margin-bottom: 2rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: #534AB7; border-radius: 2px; transition: width 0.35s ease; }
+
+    .section-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #9b9b96;
+      margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 0.5px; background: #e8e7e3; }
+
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-size: 13px; color: #5a5a57; margin-bottom: 7px; line-height: 1.5; }
+    .field label .req { color: #c84c3a; margin-left: 2px; }
+
+    input[type="text"], input[type="email"], select, textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      color: #1a1a18;
+      background: #fff;
+      border: 0.5px solid rgba(0,0,0,0.18);
+      border-radius: 8px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: #534AB7; box-shadow: 0 0 0 3px rgba(83,74,183,0.12); }
+    textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239b9b96' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+    .radio-group, .check-group { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .radio-opt, .check-opt {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border: 0.5px solid rgba(0,0,0,0.12);
+      border-radius: 8px; cursor: pointer; transition: background 0.15s;
+    }
+    .radio-opt:hover, .check-opt:hover { background: #f5f4f0; }
+    .radio-opt input, .check-opt input { margin-top: 2px; flex-shrink: 0; accent-color: #534AB7; }
+    .radio-opt span, .check-opt span { font-size: 13px; color: #1a1a18; line-height: 1.5; }
+
+    .scale-row { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+    .scale-btn {
+      width: 40px; height: 40px; border: 0.5px solid rgba(0,0,0,0.15);
+      border-radius: 8px; background: #fff; font-size: 13px; font-weight: 500;
+      color: #6b6b67; cursor: pointer; transition: all 0.15s;
+    }
+    .scale-btn:hover { border-color: #534AB7; color: #534AB7; }
+    .scale-btn.selected { background: #534AB7; border-color: #534AB7; color: #fff; }
+    .scale-labels { display: flex; justify-content: space-between; font-size: 11px; color: #9b9b96; margin-top: 6px; }
+
+    .hint { font-size: 12px; color: #9b9b96; margin-top: 5px; font-style: italic; }
+
+    .nav-row { display: flex; gap: 10px; margin-top: 12px; }
+    .btn-prev, .btn-next {
+      flex: 1; padding: 12px; border-radius: 8px; font-size: 14px;
+      font-family: inherit; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-prev { background: #fff; border: 0.5px solid rgba(0,0,0,0.18); color: #1a1a18; }
+    .btn-prev:hover { background: #f5f4f0; }
+    .btn-next { background: #f5f4f0; border: 0.5px solid rgba(0,0,0,0.12); color: #1a1a18; }
+    .btn-next:hover { background: #eceae5; }
+
+    .submit-btn {
+      width: 100%; padding: 13px; margin-top: 12px;
+      background: #534AB7; color: #fff; border: none;
+      border-radius: 8px; font-size: 14px; font-weight: 500;
+      font-family: inherit; cursor: pointer; transition: opacity 0.15s;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+
+    .success-msg { display: none; text-align: center; padding: 3rem 1rem; }
+    .success-msg .check-icon { font-size: 48px; color: #1D9E75; display: block; margin-bottom: 16px; }
+    .success-msg h2 { font-size: 20px; font-weight: 500; margin-bottom: 8px; }
+    .success-msg p { font-size: 14px; color: #6b6b67; }
+
+    @media (max-width: 480px) {
+      .wrap { padding: 1.5rem 1rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <h1>Seleção para estágio em RH</h1>
+    <p>Não se preocupe com experiência — queremos te conhecer de verdade. Responda com calma e seja você mesma.</p>
+  </div>
+
+  <div class="progress-txt" id="prog-txt">Seção 1 de 4</div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
+
+  <div id="form-body">
+
+    <!-- SEÇÃO 1: Sobre você -->
+    <div id="sec1">
+      <div class="section-label">Sobre você</div>
+
+      <div class="field">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" placeholder="Seu nome" />
+      </div>
+      <div class="field">
+        <label>E-mail <span class="req">*</span></label>
+        <input type="email" placeholder="seuemail@exemplo.com" />
+      </div>
+      <div class="field">
+        <label>Curso e instituição de ensino</label>
+        <input type="text" placeholder="Ex: Psicologia — USP" />
+      </div>
+      <div class="field">
+        <label>Previsão de formatura</label>
+        <select>
+          <option value="">Selecione...</option>
+          <option>2025</option>
+          <option>2026</option>
+          <option>2027</option>
+          <option>2028 ou depois</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Por que você se interessou por uma vaga de estágio em RH?</label>
+        <textarea placeholder="Pode ser algo que leu, viveu, ou simplesmente uma intuição — conta pra gente."></textarea>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2: Jeito de ser -->
+    <div id="sec2" style="display:none">
+      <div class="section-label">Jeito de ser</div>
+
+      <div class="field">
+        <label>Como você se descreve quando precisa aprender algo novo e sozinha?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="aprender" /><span>Pesquiso muito antes de começar — gosto de entender bem antes de agir</span></label>
+          <label class="radio-opt"><input type="radio" name="aprender" /><span>Prefiro tentar logo e ajustar no caminho</span></label>
+          <label class="radio-opt"><input type="radio" name="aprender" /><span>Busco alguém para me orientar antes de começar</span></label>
+          <label class="radio-opt"><input type="radio" name="aprender" /><span>Depende bastante do assunto</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Imagine que você errou em uma tarefa e seu gestor percebeu antes de você. Como você reagiria?</label>
+        <textarea placeholder="Descreva como você costuma reagir a esse tipo de situação..."></textarea>
+        <p class="hint">Não existe resposta errada — queremos entender como você lida com isso.</p>
+      </div>
+
+      <div class="field">
+        <label>Você está com duas tarefas para entregar no mesmo prazo e não vai conseguir fazer as duas. O que você faz?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="prazo" /><span>Aviso meu gestor logo e pedimos para redefinir prioridades juntos</span></label>
+          <label class="radio-opt"><input type="radio" name="prazo" /><span>Tento entregar as duas do jeito que der, mesmo que incompletas</span></label>
+          <label class="radio-opt"><input type="radio" name="prazo" /><span>Escolho a que parece mais importante e foco nela</span></label>
+          <label class="radio-opt"><input type="radio" name="prazo" /><span>Peço ajuda a algum colega para dividir</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 3: O que te move -->
+    <div id="sec3" style="display:none">
+      <div class="section-label">O que te move</div>
+
+      <div class="field">
+        <label>O que você mais quer aprender durante o estágio? (pode marcar mais de um)</label>
+        <div class="check-group">
+          <label class="check-opt"><input type="checkbox" /><span>Como funciona um processo seletivo na prática</span></label>
+          <label class="check-opt"><input type="checkbox" /><span>Como cuidar do bem-estar e engajamento das pessoas</span></label>
+          <label class="check-opt"><input type="checkbox" /><span>Como a área de RH contribui para a estratégia do negócio</span></label>
+          <label class="check-opt"><input type="checkbox" /><span>Como dar e receber feedbacks de forma construtiva</span></label>
+          <label class="check-opt"><input type="checkbox" /><span>Ferramentas e indicadores de gestão de pessoas</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Como você se sente ao interagir com pessoas que não conhece?</label>
+        <div class="scale-row" id="scale-social"></div>
+        <div class="scale-labels"><span>Bem desconfortável</span><span>Muito à vontade</span></div>
+      </div>
+
+      <div class="field">
+        <label>O que você acha que mais dificulta o trabalho em equipe?</label>
+        <textarea placeholder="Pode ser algo que você já viveu ou apenas uma percepção sua..."></textarea>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 4: Expectativas -->
+    <div id="sec4" style="display:none">
+      <div class="section-label">Expectativas e encerramento</div>
+
+      <div class="field">
+        <label>Você já passou por alguma experiência — dentro ou fora da faculdade — que acha que te preparou para trabalhar com pessoas?</label>
+        <textarea placeholder="Ex: trabalho voluntário, IC, monitoria, experiência em grupo, etc. Pode ser algo bem simples."></textarea>
+        <p class="hint">Não precisa ser experiência profissional.</p>
+      </div>
+
+      <div class="field">
+        <label>Onde você se imagina daqui a 3 anos?</label>
+        <textarea placeholder="Pode ser incerto — honestidade conta mais do que uma resposta bem elaborada."></textarea>
+      </div>
+
+      <div class="field">
+        <label>O que é inaceitável para você em um ambiente de trabalho?</label>
+        <textarea placeholder="Ex: falta de transparência, desrespeito, ausência de feedback..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Tem alguma coisa que você quer que a gente saiba sobre você e que não perguntamos? (opcional)</label>
+        <textarea style="min-height:60px" placeholder="Fique à vontade..."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-prev" id="btn-prev" onclick="navForm(-1)" style="display:none">← Anterior</button>
+      <button class="btn-next" id="btn-next" onclick="navForm(1)">Próximo →</button>
+    </div>
+    <button class="submit-btn" id="btn-submit" style="display:none" onclick="submitForm()">Enviar formulário</button>
+  </div>
+
+  <div class="success-msg" id="success">
+    <i class="ti ti-circle-check check-icon" aria-hidden="true"></i>
+    <h2>Formulário enviado!</h2>
+    <p>Obrigada por compartilhar um pouco de você. Em breve entraremos em contato.</p>
+  </div>
+</div>
+
+<script>
+  let cur = 1;
+  const total = 4;
+  const secs = ['sec1','sec2','sec3','sec4'];
+
+  function buildScale(id) {
+    const el = document.getElementById(id);
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'scale-btn';
+      btn.textContent = i;
+      btn.onclick = () => {
+        el.querySelectorAll('.scale-btn').forEach((b, idx) => b.classList.toggle('selected', idx < i));
+      };
+      el.appendChild(btn);
+    }
+  }
+  buildScale('scale-social');
+
+  function updateUI() {
+    secs.forEach((id, i) => document.getElementById(id).style.display = (i + 1 === cur) ? 'block' : 'none');
+    document.getElementById('prog-fill').style.width = Math.round((cur / total) * 100) + '%';
+    document.getElementById('prog-txt').textContent = `Seção ${cur} de ${total}`;
+    document.getElementById('btn-prev').style.display = cur > 1 ? 'block' : 'none';
+    document.getElementById('btn-next').style.display = cur < total ? 'block' : 'none';
+    document.getElementById('btn-submit').style.display = cur === total ? 'block' : 'none';
+  }
+
+  function navForm(dir) {
+    cur = Math.max(1, Math.min(total, cur + dir));
+    updateUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function submitForm() {
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+    document.getElementById('prog-fill').style.width = '100%';
+    document.getElementById('prog-txt').textContent = 'Concluído';
+  }
+
+  updateUI();
+</script>
+</body>
+</html>
